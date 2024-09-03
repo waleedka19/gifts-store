@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+    <title>
+        <%= pageTitle %>
+    </title>
+
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="/css/delete-button.css">
+    <link href="/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/responsive.css" rel="stylesheet" />
+    <style>
+        .delete-button.custom-delete-button {
+
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            background: red;
+            border: none;
+            border-radius: 5px;
+
+            background: #db4f66;
+            margin: 0;
+            /* Reset margin */
+        }
+
+
+        li.list-group-item form {
+            padding: 0;
+            /* Reset form padding */
+        }
+    </style>
+</head>
+
+<body dir="ltr">
+    <%- include('../includes/admin-header.ejs') %>
+        <section class="contact_section layout_padding">
+            <div class="container px-0">
+                <div class="heading_container d-flex  ">
+                    <h2 class="align-self-lg-center ">
+                        تواصي الزبائن
+                    </h2>
+                </div>
+            </div>
+            <div class="container container-bg">
+                <div class="row justify-content-center">
+                    <% if (booking.length> 0) { %>
+                        <div class="col-12  mx-auto ">
+                            <ul class="list-group list-group-horizontal m-2  center-ul">
+                                <li class="list-group-item li-bg ">
+                                    اسم المستخدم
+                                </li>
+                                <li class="list-group-item ">
+                                    البريد الالكتروني
+                                </li>
+                                <li class="list-group-item li-bg">
+                                    اسم الهدية
+                                </li>
+                                <li class="list-group-item">
+                                    وصف الهدية
+                                </li>
+                            </ul>
+                        </div>
+                        <% booking.map(books=> { %>
+                            <div class="col-12 px-0 mx-auto">
+
+                                <div class="col-md-auto">
+                                    <ul class="list-group list-group-horizontal m-2 center-ul">
+                                        <li class="list-group-item li-bg">
+                                            <%= books.userName %>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <%= books.email %>
+                                        </li>
+                                        <li class="list-group-item li-bg">
+                                            <%= books.giftName %>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <%= books.description %>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <form action="/admin/delete-booking/<%= books._id %>" method="post">
+                                                <button type="submit"
+                                                    class="delete-button custom-delete-button">حذف</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                            <% }) %>
+                                <% } else { %>
+                                    <div class="col-12 text-center">
+                                        <h1> ليس هناك اي تواصي حاليا</h1>
+                                    </div>
+                                    <% } %>
+                </div>
+            </div>
+        </section>
+</body>

@@ -1,0 +1,11 @@
+const express = require("express");
+const router = express.Router();
+const isAdmin = require("../middleware/isAdmin");
+const adminCntrl = require("../controller/admin");
+router.get("/add-product", isAdmin, adminCntrl.GetAddProduct);
+router.post("/add-product", isAdmin, adminCntrl.PostAddProduct);
+router.get("/booking-list", isAdmin, adminCntrl.getBookingList);
+router.post("/delete-booking/:id", isAdmin, adminCntrl.deleteBook);
+router.get("/admin-prodcuts", isAdmin, adminCntrl.getAdminPorducts);
+router.post("/delete-product/:id", isAdmin, adminCntrl.deleteProduct);
+module.exports = router;
