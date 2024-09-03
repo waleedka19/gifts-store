@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+    <title>
+        <%= pageTitle %>
+    </title>
+
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/responsive.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.js"
+        integrity="sha512-MXWlk6UOVfE/OdjLyby2zlldm3K36O43PyJmAmXfib7wWEUkediNdwRx4rrvM1GtP1yO+sDLCkvXV6o03sQHmA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<style>
+    h2 {
+        color: #db4f66;
+    }
+</style>
+</head>
+
+<body dir="ltr">
+    <%- include('../includes/header.ejs') %>
+        <section class="contact_section layout_padding">
+            <div class="container px-0">
+                <div class="heading_container d-flex  ">
+                    <h2 class="align-self-lg-center ">
+                        اطلب هديتك الخاصة الان
+                    </h2>
+                </div>
+            </div>
+            <div class="container container-bg ">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-5 px-0 mx-auto">
+
+                        <form action="/shop/booking" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for=" userName">اسم المستخدم</label>
+                                <input readonly class="ltr" type="text" placeholder="اسم المستخدم" name="userName"
+                                    value="<%= user.name %>" />
+                            </div>
+                            <div class="form-group">
+                                <label for=" email"> البريد الالكتروني</label>
+                                <input readonly class="ltr" type="email" name="email" value="<%= user.email %>" />
+                            </div>
+                            <div class="form-group">
+                                <label for=" email"> اسم الهدية </label>
+                                <input class="ltr" type="text" name="giftName" />
+                            </div>
+                            <div class="form-group">
+                                <label for=" description"> تفاصيل الهدية </label>
+                                <input type=" text" class="message-box"
+                                    placeholder=" الرجاء وصف الهدية بشكل واضح  وتوضيح التفاصيل المطلوبة "
+                                    name="description" />
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit">
+                                    اطلب هديتك الخاصة الان
+
+                                </button>
+
+                            </div>
+                        </form>
+                        <% if (messages && messages.length> 0) { %>
+                            <% if (messages[0].type==='success' ) { %>
+                                <div class="alert alert-success text-center " role="alert">
+                                    <%= messages[0].text %>
+                                </div>
+                                <% } else { %>
+                                    <div class="alert alert-danger text-center " role="alert">
+                                        <%= messages[0].text %>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+        </script>
+        <script src="js/custom.js"></script>
+</body>

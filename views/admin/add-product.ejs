@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+    <title>
+        <%= pageTitle %>
+    </title>
+
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/css/responsive.css" rel="stylesheet" />
+    <style>
+        h2 {
+            color: #db4f66;
+        }
+    </style>
+</head>
+
+<body dir="ltr">
+    <%- include('../includes/admin-header.ejs') %>
+        <section class="contact_section layout_padding">
+            <div class="container px-0">
+                <div class="heading_container d-flex  ">
+                    <h2 class="align-self-lg-center ">
+                        اضافة منتج
+                    </h2>
+                </div>
+            </div>
+            <div class="container container-bg ">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-5 px-0 mx-auto">
+                        <form action="/admin/add-product" method="post" enctype="multipart/form-data">
+                            <div>
+                                <input class="ltr" type="text" placeholder="اسم المنتج" name="title" />
+                            </div>
+                            <div>
+                                <input class="ltr" type="number" placeholder="سعر المنتج" name="price" />
+                            </div>
+                            <div>
+                                <input class="ltr" type="file" name="image" />
+                            </div>
+                            <div>
+                                <input type=" text" class="message-box" placeholder="وصف المنتج" name="description" />
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit">
+                                    اضافة منتج
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+</body>
