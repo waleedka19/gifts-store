@@ -32,7 +32,6 @@
         integrity="sha512-MXWlk6UOVfE/OdjLyby2zlldm3K36O43PyJmAmXfib7wWEUkediNdwRx4rrvM1GtP1yO+sDLCkvXV6o03sQHmA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-</head>
 
 
 <body>
@@ -48,22 +47,28 @@
                     <% if (prods.length> 0) { %>
                         <% for (let product of prods) { %>
                             <div class="col-sm-6 col-md-4 col-lg-3">
-                                <div class="box ">
-
-                                    <a href="/products/<%= product._id %>">
-                                        <h4 class=" ">
-                                            <%= product.title %>
-                                        </h4>
-                                        <div class="img-box">
-                                            <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
-                                        </div>
-                                        <div class="detail-box">
-
-                                            <h6> السعر <span>
-                                                    <%= product.price %> ليرة سورية
-                                                </span></h6>
-                                        </div>
-                                    </a>
+                                <div class="box d-flex flex-column h-100">
+                                    <div>
+                                        <a href="/products/<%= product._id %>">
+                                            <h4 class="">
+                                                <%= product.title %>
+                                            </h4>
+                                            <div class="img-box">
+                                                <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+                                            </div>
+                                            <div class="detail-box">
+                                                <h6> السعر <span>
+                                                        <%= product.price %> ليرة سورية
+                                                    </span></h6>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="mt-auto">
+                                        <form action="/shop/cart" method="post">
+                                            <button class="btn btn-danger  w-100" type="submit">اضف الى السلة</button>
+                                            <input type="hidden" name="productId" value="<%= product._id %>">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <% } %>

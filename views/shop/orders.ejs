@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+
+    <title>
+        <%= pageTitle %>
+    </title>
+
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/cart.css">
+    <!-- responsive style -->
+    <link href="/css/responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/orders.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.js"
+        integrity="sha512-MXWlk6UOVfE/OdjLyby2zlldm3K36O43PyJmAmXfib7wWEUkediNdwRx4rrvM1GtP1yO+sDLCkvXV6o03sQHmA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <%- include('../includes/header.ejs') %>
+        <main>
+            <% if (orders.length <=0) { %>
+                <h1>Nothing there!</h1>
+                <% } else { %>
+                    <ul class="orders">
+                        <% orders.forEach(order=> { %>
+                            <li class="orders__item">
+                                <h1>Order - # <%= order._id %>
+                                </h1>
+                                <ul class="orders__products">
+                                    <% order.products.forEach(p=> { %>
+                                        <li class="orders__products-item">
+                                            <%= p.productData.title %> (<%= p.quantity %>)
+                                        </li>
+                                        <% }); %>
+                                </ul>
+                            </li>
+                            <% }); %>
+                    </ul>
+                    <% } %>
+                        <%- include('../includes/footer.ejs') %>
+        </main>
+
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+        </script>
+        <script src="js/custom.js"></script>
+</body>
+
+</html>

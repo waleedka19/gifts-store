@@ -1,5 +1,6 @@
 const Product = require("../model/product");
 const Booking = require("../model/booking");
+const Order = require("../model/order");
 exports.getIndex = (req, res, next) => {
   Product.find()
     .sort({ createdAt: -1 })
@@ -70,4 +71,80 @@ exports.postBooking = (req, res, next) => {
       req.flash("messages", { type: "error", text: "حدث خطا اثناء العملية" });
       console.log(err);
     });
+};
+
+exports.getCart = (req, res, next) => {
+  req.user
+    .populate("cart.items.productId")
+    .then((user) => {
+      const products = user.cart.items;
+      res.render("shop/cart", {
+        user: req.session.user,
+        pageTitle: "Your Cart",
+        products: products,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.postCart = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId)
+    .then((product) => {
+      return req.user.addToCart(product);
+    })
+    .then((result) => {
+      res.redirect("/shop/cart");
+    });
+};
+
+exports.postCartDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  req.user
+    .removeFromCart(prodId)
+    .then((result) => {
+      res.redirect("/shop/cart");
+    })
+    .catch((err) => console.log(err));
+};
+exports.postOrder = (req, res, next) => {
+  req.user
+    .populate("cart.items.productId")
+    .then((user) => {
+      const products = user.cart.items.map((i) => {
+        return { quantity: i.quantity, productData: { ...i.productId._doc } };
+      });
+
+      const order = new Order({
+        user: {
+          name: req.user.name,
+          userId: req.user._id,
+        },
+        products: products,
+      });
+
+      return order.save();
+    })
+    .then((result) => {
+      return req.user.clearCart();
+    })
+    .then(() => {
+      res.redirect("/shop/order");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.getOrders = (req, res, next) => {
+  Order.find({ "user.userId": req.user._id })
+    .then((orders) => {
+      console.log(orders);
+      res.render("shop/orders", {
+        pageTitle: "Your Orders",
+        user: req.session.user,
+        orders: orders,
+      });
+    })
+    .catch((err) => console.log(err));
 };
