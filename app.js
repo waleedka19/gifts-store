@@ -1,14 +1,16 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const MONGODB_URI = "mongodb://127.0.0.1:27017/gifto";
+const MONGODB_URI = process.env.DATABASE_URL;
 const session = require("express-session");
 const flash = require("connect-flash");
 const MongoDBstore = require("connect-mongodb-session")(session);
 const app = express();
+
 const store = new MongoDBstore({
-  uri: "mongodb://127.0.0.1:27017/gifto",
+  uri: process.env.DATABASE_URL,
   collection: "sessions",
 });
 const bodyParser = require("body-parser");
@@ -21,7 +23,7 @@ app.set("views", "views");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "veryverysecretpassword",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store,

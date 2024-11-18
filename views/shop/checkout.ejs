@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>
+        <%= pageTitle %>
+    </title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+    <link href="/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/cart.css">
+
+</head>
+
+<body>
+    <%- include('../includes/header.ejs') %>
+        <main>
+            <ul class="cart__item-list">
+                <% products.forEach(p=> { %>
+                    <li class="cart__item">
+                        <h1>
+                            <%= p.productId.title %>
+                        </h1>
+                        <h2>Quantity: <%= p.quantity %>
+                        </h2>
+                    </li>
+                    <% }) %>
+            </ul>
+            <div class="centered">
+                <h2>Total: <%= totalSum %>
+                </h2>
+            </div>
+            <div class="centered">
+                <button id="order-btn" class="btn btn-danger m-0 ">ُتثبيت الطلب</button>
+                <script src="https://js.stripe.com/v3/"></script>
+                <script>
+                    var stripe = Stripe('pk_test_51QM4gBHxnO5fv1D2awK1aoKWkbvvpGt2B6JHjRd5wrTt6Co2rz1he2KeVpgAyIfx2ikcqPdcdRHIC5aLOhmZH23600PH8ZY9pD');
+                    var orderbtn = document.getElementById('order-btn');
+                    orderbtn.addEventListener('click', function () {
+                        stripe.redirectToCheckout({
+                            sessionId: '<%= sessionId %>' // Use session ID from backend
+                        });
+                    });
+                </script>
+            </div>
+        </main>
+</body>
+
+</html>

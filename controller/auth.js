@@ -1,5 +1,15 @@
 const User = require("../model/user");
 const bcrypt = require("bcryptjs");
+const MailerSend = require("mailersend").MailerSend;
+const EmailParams = require("mailersend").EmailParams;
+const Sender = require("mailersend").Sender;
+const Recipient = require("mailersend").Recipient;
+const mailersend = new MailerSend({
+  apiKey: process.env.MAILERSAND_API_KEY,
+});
+
+const sentFrom = new Sender(process.env.MAILERSAND_DOMAIN_EMAIL, "Waleed");
+
 exports.getSignUp = (req, res, next) => {
   res.render("shop/signup", {
     pageTitle: "انشاء حساب ",
@@ -17,6 +27,7 @@ exports.postSignUp = (req, res, next) => {
     req.flash("error", "كلمة السر غير متطابقة");
     return res.redirect("/signup");
   }
+
   User.findOne({ email: email })
     .then((userDoc) => {
       if (userDoc) {
@@ -25,23 +36,46 @@ exports.postSignUp = (req, res, next) => {
       }
       return bcrypt.hash(password, 12);
     })
-    .then((hashedpassowrd) => {
+    .then((hashedPassword) => {
       const user = new User({
         name: fullname,
         email: email,
-        password: hashedpassowrd,
+        password: hashedPassword,
       });
       return user.save();
     })
     .then((result) => {
-      console.log("user created");
-      req.flash("success", "تم انشاء الحساب بنجاح");
+      console.log("User created");
 
+      const recipients = [new Recipient(email, fullname)];
+      const emailParams = new EmailParams()
+        .setFrom(sentFrom)
+        .setTo(recipients)
+        .setReplyTo(sentFrom)
+        .setSubject("Welcome to Our Platform!")
+        .setHtml(
+          `<p>Dear ${fullname},</p><p>Thank you for signing up!</p><p>Best Regards,<br>Waleed</p>`
+        )
+        .setText(
+          `Dear ${fullname},\n\nThank you for signing up!\n\nBest Regards,\nWaleed`
+        );
+
+      return mailersend.email.send(emailParams);
+    })
+    .then(() => {
+      req.flash("success", "تم انشاء الحساب بنجاح");
       res.redirect("/login");
     })
     .catch((err) => {
-      console.log(err);
-      req.flash("error", "حدث خطأ أثناء عملية الإنشاء");
+      console.error("Error during signup:", err);
+
+      if (err?.body?.message) {
+        req.flash("error", `MailerSend Error: ${err.body.message}`);
+      } else {
+        req.flash("error", "حدث خطأ أثناء عملية الإنشاء");
+      }
+
+      res.redirect("/signup");
     });
 };
 

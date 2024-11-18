@@ -23,7 +23,9 @@ body {
 .layout_padding2-bottom {
   padding-bottom: 45px;
 }
-
+.centered {
+  text-align: center;
+}
 .layout_padding-top {
   padding-top: 90px;
 }
